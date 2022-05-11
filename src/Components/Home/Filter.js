@@ -10,13 +10,14 @@ function Filter({ props, togglePopup }) {
     const [isShow, setIsShow] = useState(false);
     const [ratingcount, setRatingcount] = useState(0);
     const [rating, setRating] = useState(0);
-    const [filterText, setFilterText] = useState('');
+    const [isClick, setIsClick] = useState(false);
     const handleChange = (e) => {
 
         const { innerHTML, outerText } = e.target;
 
+     (applyCount < Object.values(filtered).length)? setApplyCount(applyCount + 1) : setApplyCount(Object.values(filtered).length + 1)
 
-        (applyCount < Object.values(filtered).length + 1) ? setApplyCount(applyCount + 1) : setApplyCount(Object.values(filtered).length)
+  
 
         setFiltered({ ...filtered, [innerHTML]: outerText });
 
@@ -24,9 +25,11 @@ function Filter({ props, togglePopup }) {
     }
     console.log("filtered", filtered)
     const applyCountRating = (e) => {
-        console.log("event isShow", typeof (e.target.nextElementSibling.innerText), e, e.target.nextElementSibling.innerText)
-        setRating(e.target.nextElementSibling.innerText);
+        // console.log("event isShow", typeof (e.target.nextElementSibling.innerText), e, e.target.nextElementSibling.innerText)
+       setRating(e.target.nextElementSibling.innerText);
         // setFilterText()
+        console.log("isClick text", isClick);
+        console.log("rating text", rating);
         if (ratingcount === 0) {
             setApplyCount(applyCount + 1);
 
@@ -240,13 +243,13 @@ function Filter({ props, togglePopup }) {
                     <h3 className="filter-heading" onClick={ShowRatings}>Ranting Range Filter</h3>
                     {
                         isShowRating && (<ul className='ultag-genre'>
-                            <label style={{ backgroundColor: (rating.toString() === (3).toString()) ? "orange" : "" }} onClick={applyCountRating}>
+                            <label style={{ backgroundColor: (rating.toString() === (3).toString()) ? "orange" : "" }} onClick={(e) => {setIsClick(!isClick); applyCountRating(e);}}>
                                 <input type="radio" id="rating1" key="3" name="choice" value="Less 3" />Less<span htmlFor="rating1" value="3">3</span>
                             </label>
-                            <label style={{ backgroundColor: (rating.toString() === (4).toString()) ? "orange" : "" }} onClick={applyCountRating}>
+                            <label style={{ backgroundColor: ((rating.toString() === (4).toString()) ? "orange" : "") }} onClick={(e) => {setIsClick(!isClick); applyCountRating(e);}}>
                                 <input type="radio" id="rating2" key="4" name="choice" value="above 4" />above<span htmlFor="rating2" value="4">4</span>
                             </label>
-                            <label style={{ backgroundColor: (rating.toString() === (5).toString()) ? "orange" : "" }} onClick={applyCountRating}>
+                            <label style={{ backgroundColor: ((rating.toString() === (5).toString()) ? "orange" : "" )}} onClick={(e) => {setIsClick(!isClick); applyCountRating(e);}}>
                                 <input type="radio" id="rating3" key="5" name="choice" value="5" />LessThan & equal<span htmlFor="rating3" value="5">5</span>
                             </label>
 
